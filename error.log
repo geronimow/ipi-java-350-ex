@@ -1,0 +1,2 @@
+21-06-2022 11:44:01.534 DEBUG org.jboss.logging - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+21-06-2022 11:44:01.537 WARN  org.hibernate.orm.bytecode - L'employée existe déjà en BDD

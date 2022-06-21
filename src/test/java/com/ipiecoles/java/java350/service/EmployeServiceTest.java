@@ -18,6 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.persistence.EntityExistsException;
+
+import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
 import static org.mockito.Mockito.*;
 import java.time.LocalDate;
 @ExtendWith(MockitoExtension.class)
@@ -61,6 +63,7 @@ public class EmployeServiceTest {
         //Then
         Assertions.assertThat(t).isInstanceOf(EntityExistsException.class)
                 .hasMessage("L'employé de matricule C00001 existe déjà en BDD");
+        LOGGER.warn("L'employée existe déjà en BDD");;
     }
     @Test
     public void testEmbaucheEmploye() throws EmployeException {
