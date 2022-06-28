@@ -1,5 +1,6 @@
 package com.ipiecoles.java.java350.model;
 
+import com.ipiecoles.java.java350.exception.EmployeException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -92,4 +93,82 @@ public class EmployeTest {
         //Then
         Assertions.assertThat(primeObtenue).isEqualTo(prime);
     }
+
+    @Test
+    public void testAugmenterSalaireDe10Pourcente() throws EmployeException {
+        //Given
+        Employe employe = new Employe();
+
+        //When
+        try {
+            employe.augmenterSalaire(0.1);
+        } catch (EmployeException a) {
+            a.printStackTrace();
+        }
+
+        //Then
+        System.out.println(employe.getSalaire());
+        Assertions.assertThat(employe.getSalaire()).isEqualTo(1673.342);
+    }
+
+    @Test
+    public void testAugmenterSalaire60Pourcents() throws EmployeException {
+        //Given
+        Employe employe = new Employe();
+
+        //When
+        Throwable a = Assertions.catchThrowable(() -> {
+            employe.augmenterSalaire(0.6);
+        });
+
+        //Then
+        System.out.println(employe.getSalaire());
+        Assertions.assertThat(a).isInstanceOf(EmployeException.class).hasMessage("Le pourcentage ne doit pas être supérieur à 0.5");
+    }
+
+    @Test
+    public void testAugmenterSalaireNégatif() throws EmployeException {
+        //Given
+        Employe employe = new Employe();
+
+        //When
+        Throwable a = Assertions.catchThrowable(() -> {
+            employe.augmenterSalaire(-0.2);
+        });
+
+        //Then
+        System.out.println(employe.getSalaire());
+        Assertions.assertThat(a).isInstanceOf(EmployeException.class).hasMessage("Le pourcentage ne peut pas être négatif");
+    }
+
+    @Test
+    public void testAugmenterSalaireNull() throws EmployeException {
+        //Given
+        Employe employe = new Employe();
+        employe.setSalaire(null);
+
+        //When
+        Throwable a = Assertions.catchThrowable(() -> {
+            employe.augmenterSalaire(0);
+        });
+
+        //Then
+        System.out.println(employe.getSalaire());
+        Assertions.assertThat(a).isInstanceOf(EmployeException.class).hasMessage("Le salaire est null");
+    }
+
+    @Test
+    public void getNbRtt(){
+        //Given
+        Employe employe = new Employe();
+        employe.setDateEmbauche(LocalDate.now());
+
+        //When
+        Integer nbAnneesAnciennete = employe.getNombreAnneeAnciennete();
+
+        //Then nbAnneesAnciennete = 0
+        Assertions.assertThat(nbAnneesAnciennete).isZero();
+    }
+
+
 }
