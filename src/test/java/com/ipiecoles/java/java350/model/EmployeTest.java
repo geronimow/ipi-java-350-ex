@@ -157,17 +157,29 @@ public class EmployeTest {
         Assertions.assertThat(a).isInstanceOf(EmployeException.class).hasMessage("Le salaire est null");
     }
 
-    @Test
-    public void getNbRtt(){
+    @ParameterizedTest
+    @CsvSource({
+            "2019,1.0,8",
+            "2021,1.0,9",
+            "2022,1.0,10",
+            "2032,1.0,11",
+    })
+    public void testGetNbRtt(
+            Integer annee,
+            Double tempsPartiel,
+            Integer nbRttOk
+    ){
         //Given
+        LocalDate date = LocalDate.of(annee,1,1);
         Employe employe = new Employe();
-        employe.setDateEmbauche(LocalDate.now());
+        employe.setTempsPartiel(tempsPartiel);
 
         //When
-        Integer nbAnneesAnciennete = employe.getNombreAnneeAnciennete();
+        Integer nbRtt = employe.getNbRtt(date);
+        System.out.println(nbRtt);
 
-        //Then nbAnneesAnciennete = 0
-        Assertions.assertThat(nbAnneesAnciennete).isZero();
+        //Then
+        Assertions.assertThat(nbRtt).isEqualTo(nbRttOk);
     }
 
 

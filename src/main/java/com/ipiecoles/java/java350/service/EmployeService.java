@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import java.time.LocalDate;
-@Service
+@Service("EmployeService")
 public class EmployeService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     //private static final Logger LOGGER = LoggerFactory.getLogger(EmployeService.class);
@@ -92,7 +92,7 @@ public class EmployeService {
      */
     public void calculPerformanceCommercial(String matricule, Long caTraite, Long objectifCa) throws EmployeException {
         //Vérification des paramètres d'entrée
-        if(caTraite == null || caTraite < 0){
+        if(caTraite == null || caTraite < 1){
             throw new EmployeException("Le chiffre d'affaire traité ne peut être négatif ou null !");
         }
         if(objectifCa == null || objectifCa < 0){

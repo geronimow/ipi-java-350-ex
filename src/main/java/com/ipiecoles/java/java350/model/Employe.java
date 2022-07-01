@@ -64,19 +64,31 @@ public class Employe {
         return getNbRtt(LocalDate.now());
     }
 
+    /**
+     * Méthode calculant le nombre de RTT d'un employé au pro-rata de son taux d'activité
+     * joursAnnee = jours dans l'année
+     * joursWeeknd = jours de week-end dans l'année
+     * @param d date
+     * @return le nombre de RTT
+     */
+
     public Integer getNbRtt(LocalDate d){
-        int i1 = d.isLeapYear() ? 366 : 365;int var = 104;
-        switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
-        case THURSDAY: if(d.isLeapYear()) var =  var + 1; break;
-        case FRIDAY:
-        if(d.isLeapYear()) var =  var + 2;
-        else var =  var + 1;
-case SATURDAY:var = var + 1;
-                    break;
+        int joursAnnee = d.isLeapYear() ? 366 : 365;
+        int joursWeeknd = 104;
+
+         switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
+          case THURSDAY:
+            if(d.isLeapYear()) joursWeeknd =  joursWeeknd + 1;
+            break;
+           case FRIDAY:
+            if(d.isLeapYear()) joursWeeknd =  joursWeeknd + 2;
+            else joursWeeknd =  joursWeeknd + 1;
+           case SATURDAY:joursWeeknd = joursWeeknd + 1;
+            break;
         }
-        int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
+        int joursFeries = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
                 localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
-        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - var - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
+        return (int) Math.ceil((joursAnnee - Entreprise.NB_JOURS_MAX_FORFAIT - joursWeeknd - Entreprise.NB_CONGES_BASE - joursFeries) * tempsPartiel);
     }
 
     /**
