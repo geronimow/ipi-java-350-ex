@@ -37,7 +37,7 @@ public class EmployeServiceIntegrationTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithoutEmploye() throws EmployeException {
+    void testEmbaucheEmployeWithoutEmploye() throws EmployeException {
         //given
 
         //when
@@ -50,7 +50,7 @@ public class EmployeServiceIntegrationTest {
     }
 
     @Test
-    public void testEmbaucheEmployeWithEmploye() throws EmployeException {
+    void testEmbaucheEmployeWithEmploye() throws EmployeException {
         //given
         Employe employeBefore = new Employe("ooo","nnn","M11111", LocalDate.now(),8000.0,4,1.0);
         employeRepository.save(employeBefore);
@@ -72,7 +72,7 @@ public class EmployeServiceIntegrationTest {
 
 
     @Test
-    public void testCalculPerformanceCommercial() throws EmployeException {
+    void testCalculPerformanceCommercial() throws EmployeException {
         //given
         Employe employe = new Employe("Doe","John","C12345", LocalDate.now(),1000.0,5,1.0);
         employeRepository.save(employe);
@@ -87,7 +87,7 @@ public class EmployeServiceIntegrationTest {
     }
 
     @Test
-    public void avgPerformanceWhereMatriculeStartsWith() throws EmployeException {
+    void avgPerformanceWhereMatriculeStartsWith() throws EmployeException {
         //given
         Employe employe = new Employe("Doe","John","C12345", LocalDate.now(),1000.0,5,1.0);
         employeRepository.save(employe);

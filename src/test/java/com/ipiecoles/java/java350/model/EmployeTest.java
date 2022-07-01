@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class EmployeTest {
 
     @Test
-    public void testGetNbAnneesAncienneteDateEmbaucheNow(){
+    void testGetNbAnneesAncienneteDateEmbaucheNow(){
         //Given
         Employe employe = new Employe();
         employe.setDateEmbauche(LocalDate.now());
@@ -24,7 +24,7 @@ public class EmployeTest {
     }
 
     @Test
-    public void testGetNbAnneesAncienneteDateEmbauchePassee(){
+    void testGetNbAnneesAncienneteDateEmbauchePassee(){
         //Given
         //Date d'embauche 10 ans dans le passé
         Employe employe = new Employe();
@@ -40,7 +40,7 @@ public class EmployeTest {
     }
 
     @Test
-    public void testGetNbAnneesAncienneteDateEmbaucheFuture(){
+    void testGetNbAnneesAncienneteDateEmbaucheFuture(){
         //Given
         //Date d'embauche 2 ans dans le futur
         Employe employe = new Employe();
@@ -55,7 +55,7 @@ public class EmployeTest {
     }
 
     @Test
-    public void testGetNbAnneesAncienneteDateEmbaucheNull(){
+    void testGetNbAnneesAncienneteDateEmbaucheNull(){
         //Given
         Employe employe = new Employe();
         employe.setDateEmbauche(null);
@@ -76,7 +76,7 @@ public class EmployeTest {
             ",0,1,1.0,1000.0",
             "'T12346',0,,1.0,1000.0"
     })
-    public void testGetPrimeAnnuelleManagerPerformanceBasePleinTemps(
+    void testGetPrimeAnnuelleManagerPerformanceBasePleinTemps(
             String matricule,
             Integer nbAnneesAnciennete,
             Integer performance,
@@ -95,7 +95,7 @@ public class EmployeTest {
     }
 
     @Test
-    public void testAugmenterSalaireDe10Pourcente() throws EmployeException {
+    void testAugmenterSalaireDe10Pourcente() throws EmployeException {
         //Given
         Employe employe = new Employe();
 
@@ -112,7 +112,7 @@ public class EmployeTest {
     }
 
     @Test
-    public void testAugmenterSalaire60Pourcents() throws EmployeException {
+    void testAugmenterSalaire60Pourcents() throws EmployeException {
         //Given
         Employe employe = new Employe();
 
@@ -127,7 +127,7 @@ public class EmployeTest {
     }
 
     @Test
-    public void testAugmenterSalaireNégatif() throws EmployeException {
+    void testAugmenterSalaireNégatif() throws EmployeException {
         //Given
         Employe employe = new Employe();
 
@@ -142,7 +142,7 @@ public class EmployeTest {
     }
 
     @Test
-    public void testAugmenterSalaireNull() throws EmployeException {
+    void testAugmenterSalaireNull() throws EmployeException {
         //Given
         Employe employe = new Employe();
         employe.setSalaire(null);
@@ -164,7 +164,7 @@ public class EmployeTest {
             "2022,1.0,10",
             "2032,1.0,11",
     })
-    public void testGetNbRtt(
+    void testGetNbRtt(
             Integer annee,
             Double tempsPartiel,
             Integer nbRttOk

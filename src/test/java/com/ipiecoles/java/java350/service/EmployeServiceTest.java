@@ -91,7 +91,7 @@ public class EmployeServiceTest {
 
     // calculPerformanceCommercial
     @Test
-    public void testCalculPerformanceCommercialWithCaTraiteNegatifOrNull(){
+    void testCalculPerformanceCommercialWithCaTraiteNegatifOrNull(){
         //given
 
         //when
@@ -104,7 +104,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithObjectifCaNegatifOrNull(){
+    void testCalculPerformanceCommercialWithObjectifCaNegatifOrNull(){
         //given
 
         //when
@@ -117,7 +117,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithMatriculeNotExisting(){
+    void testCalculPerformanceCommercialWithMatriculeNotExisting(){
         //given
         Mockito.when(employeRepository.findByMatricule("C12345")).thenReturn(null);
 
@@ -135,7 +135,7 @@ public class EmployeServiceTest {
             "10,1",
             "90,2"
     })
-    public void testCalculPerformanceCommercial(Long CaTraite, Integer performance) throws EmployeException {
+    void testCalculPerformanceCommercial(Long CaTraite, Integer performance) throws EmployeException {
         //given
         Mockito.when(employeRepository.findByMatricule("C54321")).thenReturn(
                 new Employe("Amine","Gouiri","C54321",LocalDate.now(),500.0, 10,1.0
