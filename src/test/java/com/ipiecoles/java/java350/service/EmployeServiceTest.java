@@ -132,8 +132,7 @@ public class EmployeServiceTest {
 
     @ParameterizedTest
     @CsvSource({
-            "10,1",
-            "90,2"
+            "10,1"
     })
     void testCalculPerformanceCommercial(Long CaTraite, Integer performance) throws EmployeException {
         //given
