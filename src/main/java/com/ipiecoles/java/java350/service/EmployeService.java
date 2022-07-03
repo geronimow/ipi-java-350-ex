@@ -92,7 +92,7 @@ public class EmployeService {
      */
     public void calculPerformanceCommercial(String matricule, Long caTraite, Long objectifCa) throws EmployeException {
         //Vérification des paramètres d'entrée
-        if(caTraite == null || caTraite < 1){
+        if(caTraite == null ){
             throw new EmployeException("Le chiffre d'affaire traité ne peut être négatif ou null !");
         }
         if(objectifCa == null || objectifCa < 0){
