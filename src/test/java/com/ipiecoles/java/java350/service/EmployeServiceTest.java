@@ -91,12 +91,25 @@ public class EmployeServiceTest {
 
     // calculPerformanceCommercial
     @Test
-    void testCalculPerformanceCommercialWithCaTraiteNegatifOrNull(){
+    void testCalculPerformanceCommercialWithCaTraiteNull(){
         //given
 
         //when
         Throwable t = Assertions.catchThrowable(() -> {
-            employeService.calculPerformanceCommercial("C12345", (long) -1, (long) 1);
+            employeService.calculPerformanceCommercial("C12345", null, (long) 1);
+        });
+
+        //then
+        Assertions.assertThat(t).isInstanceOf(EmployeException.class).hasMessage("Le chiffre d'affaire traité ne peut être négatif ou null !");
+    }
+
+    @Test
+    void testCalculPerformanceCommercialWithCaTraiteNegatif(){
+        //given
+
+        //when
+        Throwable t = Assertions.catchThrowable(() -> {
+            employeService.calculPerformanceCommercial("C12345", (long)-1, (long) 1);
         });
 
         //then
