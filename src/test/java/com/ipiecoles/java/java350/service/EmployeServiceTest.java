@@ -91,12 +91,12 @@ public class EmployeServiceTest {
 
     // calculPerformanceCommercial
     @Test
-    void testCalculPerformanceCommercialWithCaTraiteNull(){
+    void testCalculPerformanceCommercialWithCaTraiteNegatif(){
         //given
 
         //when
         Throwable t = Assertions.catchThrowable(() -> {
-            employeService.calculPerformanceCommercial("C12345", null, (long) 1);
+            employeService.calculPerformanceCommercial("C12345", (long) -1, (long) 1);
         });
 
         //then
@@ -104,12 +104,12 @@ public class EmployeServiceTest {
     }
 
     @Test
-    void testCalculPerformanceCommercialWithCaTraiteNegatif(){
+    void testCalculPerformanceCommercialWithCaTraiteNull(){
         //given
 
         //when
         Throwable t = Assertions.catchThrowable(() -> {
-            employeService.calculPerformanceCommercial("C12345", (long)-1, (long) 1);
+            employeService.calculPerformanceCommercial("C12345", null, (long) 1);
         });
 
         //then
@@ -141,6 +141,32 @@ public class EmployeServiceTest {
 
         //then
         Assertions.assertThat(t).isInstanceOf(EmployeException.class).hasMessage("Le matricule C12345 n'existe pas !");
+    }
+
+    @Test
+    public void testCalculPerformanceCommercialWithMatriculeNotStartingWithC(){
+        //given
+
+        //when
+        Throwable t = Assertions.catchThrowable(() -> {
+            employeService.calculPerformanceCommercial("X12345", 1L, 1L);
+        });
+
+        //then
+        Assertions.assertThat(t).isInstanceOf(EmployeException.class).hasMessage("Le matricule ne peut être null et doit commencer par un C !");
+    }
+
+    @Test
+    public void testCalculPerformanceCommercialWithMatriculeNull(){
+        //given
+
+        //when
+        Throwable t = Assertions.catchThrowable(() -> {
+            employeService.calculPerformanceCommercial(null, 1L, 1L);
+        });
+
+        //then
+        Assertions.assertThat(t).isInstanceOf(EmployeException.class).hasMessage("Le matricule ne peut être null et doit commencer par un C !");
     }
 
     @ParameterizedTest
