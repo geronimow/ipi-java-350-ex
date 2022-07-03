@@ -144,7 +144,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithMatriculeNotStartingWithC(){
+    void testCalculPerformanceCommercialWithMatriculeNotStartingWithC(){
         //given
 
         //when
@@ -157,7 +157,7 @@ public class EmployeServiceTest {
     }
 
     @Test
-    public void testCalculPerformanceCommercialWithMatriculeNull(){
+    void testCalculPerformanceCommercialWithMatriculeNull(){
         //given
 
         //when
