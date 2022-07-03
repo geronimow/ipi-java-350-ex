@@ -6,16 +6,22 @@ import com.ipiecoles.java.java350.model.Entreprise;
 import com.ipiecoles.java.java350.model.NiveauEtude;
 import com.ipiecoles.java.java350.model.Poste;
 import com.ipiecoles.java.java350.repository.EmployeRepository;
+
+import com.ipiecoles.java.java350.service.EmployeService;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 
+@ExtendWith(SpringExtension.class) // Junit 5
 @SpringBootTest
 public class EmployeServiceIntegrationTest {
 
@@ -25,33 +31,72 @@ public class EmployeServiceIntegrationTest {
     @Autowired
     EmployeService employeService;
 
-    @AfterEach
     @BeforeEach
-    public void purge(){
+    public void delete(){
         employeRepository.deleteAll();
     }
 
     @Test
-    public void TestEmbaucheEmploye() throws EmployeException {
-        //Given
-        employeRepository.save(new Employe("Doe", "John", "T12345", LocalDate.now(), Entreprise.SALAIRE_BASE, 1, 1.0));
-        String nom = "Doe";
-        String prenom = "John";
-        Poste poste = Poste.TECHNICIEN;
-        NiveauEtude niveauEtude = NiveauEtude.BTS_IUT;
-        Double tempsPartiel = 1.0;
+    void testEmbaucheEmployeWithoutEmploye() throws EmployeException {
+        //given
 
-        //When
-        employeService.embaucheEmploye(nom, prenom, poste, niveauEtude, tempsPartiel);
+        //when
+        employeService.embaucheEmploye("oui","non", Poste.TECHNICIEN, NiveauEtude.BAC,1.0);
+        List<Employe> employes = employeRepository.findAll();
+        Employe employe = employes.get(0);
 
-        //Then
-        Employe employe = employeRepository.findByMatricule("T12346");
-        Assertions.assertThat(employe.getNom()).isEqualTo("Doe");
-        Assertions.assertThat(employe.getPrenom()).isEqualTo("John");
-        Assertions.assertThat(employe.getMatricule()).isEqualTo("T12346");
+        //then
+        Assertions.assertThat(employe.getMatricule()).isEqualTo("T00001");
+    }
+
+    @Test
+    void testEmbaucheEmployeWithEmploye() throws EmployeException {
+        //given
+        Employe employeBefore = new Employe("ooo","nnn","M11111", LocalDate.now(),8000.0,4,1.0);
+        employeRepository.save(employeBefore);
+
+        //when
+        employeService.embaucheEmploye("oui","non", Poste.TECHNICIEN, NiveauEtude.BAC,1.0);
+
+
+        //then
+        Employe employe = employeRepository.findByMatricule("T11112");
+        Assertions.assertThat(employe.getMatricule()).isEqualTo("T11112");
+        Assertions.assertThat(employe.getNom()).isEqualTo("oui");
+        Assertions.assertThat(employe.getPrenom()).isEqualTo("non");
         Assertions.assertThat(employe.getDateEmbauche()).isEqualTo(LocalDate.now());
         Assertions.assertThat(employe.getPerformance()).isEqualTo(Entreprise.PERFORMANCE_BASE);
-        Assertions.assertThat(employe.getSalaire()).isEqualTo(1825.46);
+        Assertions.assertThat(employe.getSalaire()).isEqualTo(1673.34);
         Assertions.assertThat(employe.getTempsPartiel()).isEqualTo(1);
     }
+
+
+    @Test
+    void testCalculPerformanceCommercial() throws EmployeException {
+        //given
+        Employe employe = new Employe("Doe","John","C12345", LocalDate.now(),1000.0,5,1.0);
+        employeRepository.save(employe);
+
+        //when
+        employeService.calculPerformanceCommercial("C12345", (long) 10, (long) 10);
+
+
+        //then
+        Employe employeNew = employeRepository.findByMatricule("C12345");
+        Assertions.assertThat(employeNew.getPerformance()).isEqualTo(5);
+    }
+
+    @Test
+    void avgPerformanceWhereMatriculeStartsWith() throws EmployeException {
+        //given
+        Employe employe = new Employe("Doe","John","C12345", LocalDate.now(),1000.0,5,1.0);
+        employeRepository.save(employe);
+
+        //when
+        employeRepository.avgPerformanceWhereMatriculeStartsWith("C");
+
+        //then
+        Assertions.assertThat(employeRepository.avgPerformanceWhereMatriculeStartsWith("C")).isEqualTo(5);
+    }
+
 }
